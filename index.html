@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+  <meta charset="UTF-8">
+  <title>מצלמות אבטחה</title>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-image: url('img/img.png');
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      direction: rtl;
+    }
+
+    h1 {
+      color: #fff;
+      font-size: 48px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+      margin-bottom: 40px;
+    }
+
+    .lock-container {
+      text-align: center;
+      background: rgba(255, 255, 255, 0.8);
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+    }
+
+    .lock {
+      width: 100px;
+      height: 120px;
+      margin: 20px auto;
+      background: #888;
+      border-radius: 10px;
+      position: relative;
+      transition: transform 0.3s ease;
+    }
+
+    .shackle {
+      width: 60px;
+      height: 40px;
+      border: 10px solid #444;
+      border-bottom: none;
+      border-radius: 30px 30px 0 0;
+      position: absolute;
+      top: -40px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: transparent;
+      transition: transform 0.5s ease, top 0.5s ease;
+    }
+
+    .lock.open {
+      background: #4caf50;
+      transform: scale(1.05);
+    }
+
+    .lock.open .shackle {
+      transform: translateX(-50%) rotate(55deg);
+      top: -10px;
+    }
+
+    .lock.shake {
+      animation: shake 0.4s;
+    }
+
+    @keyframes shake {
+      0% { transform: translateX(0); }
+      25% { transform: translateX(-10px); }
+      50% { transform: translateX(10px); }
+      75% { transform: translateX(-10px); }
+      100% { transform: translateX(0); }
+    }
+
+    input[type="text"] {
+      font-size: 24px;
+      padding: 10px;
+      width: 180px;
+      text-align: center;
+      letter-spacing: 10px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      font-size: 18px;
+      padding: 10px 20px;
+      cursor: pointer;
+      background-color: #f06292;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #ec407a;
+    }
+  </style>
+</head>
+<body>
+  <h1>מצלמות אבטחה</h1>
+  <div class="lock-container">
+    <div class="lock" id="lock">
+      <div class="shackle"></div>
+    </div>
+    <input type="text" id="codeInput" maxlength="6" placeholder="הזן קוד">
+    <br>
+    <button onclick="checkCode()">פתח מנעול</button>
+  </div>
+
+  <script>
+    const correctCode = "162025";
+
+    function checkCode() {
+      const input = document.getElementById("codeInput").value;
+      const lock = document.getElementById("lock");
+
+      lock.classList.remove("open", "shake");
+
+      if (input === correctCode) {
+        lock.classList.add("open");
+        launchConfetti();
+      } else {
+        lock.classList.add("shake");
+      }
+    }
+
+    function checkCode() {
+      const input = document.getElementById("codeInput").value;
+      const lock = document.getElementById("lock");
+    
+      lock.classList.remove("open");
+    
+      if (input === correctCode) {
+        lock.classList.add("open");
+        launchConfetti();
+      } else {
+        // הסרת shake (אם קיימת), והוספה מחדש עם עיכוב קטן
+        lock.classList.remove("shake");
+        void lock.offsetWidth; // טריק לאלץ רענון CSS
+        lock.classList.add("shake");
+      }
+    }
+    
+  </script>
+</body>
+</html>
